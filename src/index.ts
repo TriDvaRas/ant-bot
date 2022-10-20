@@ -24,7 +24,7 @@ client.on('messageCreate', async (message) => {
 
 
 // add the trackStart event so when a song will be played this message will be sent
-player.on("trackStart", (queue: any, track) => queue.metadata.channel.send(`🎶 | Now playing **${track.title}**!`))
+player.on("trackStart", (queue: any, track) => console.log(`🎶 | Now playing **${track.title}**!`))
 
 client.once("ready", () => {
     console.log("I'm ready !");
