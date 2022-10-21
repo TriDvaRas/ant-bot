@@ -1,4 +1,4 @@
-import { Guild, Message } from "discord.js";
+import { ApplicationCommandOptionType, Guild, Message } from "discord.js";
 
 export async function initCommands(guild: Guild) {
     await (guild as Guild).commands.set([
@@ -8,7 +8,7 @@ export async function initCommands(guild: Guild) {
             options: [
                 {
                     name: 'song',
-                    type: 'STRING' as const,
+                    type: ApplicationCommandOptionType.String,
                     description: 'The URL of the song to play',
                     required: true,
                 }
@@ -20,13 +20,13 @@ export async function initCommands(guild: Guild) {
             options: [
                 {
                     name: 'song',
-                    type: 'STRING' as const,
+                    type: ApplicationCommandOptionType.String,
                     description: 'The URL of the song to play',
                     required: true,
                 },
                 {
                     name: 'shuffle',
-                    type: 'BOOLEAN' as const,
+                    type: ApplicationCommandOptionType.Boolean,
                     description: 'Random order',
                     required: false,
                 },
@@ -38,7 +38,7 @@ export async function initCommands(guild: Guild) {
             options: [
                 {
                     name: 'song',
-                    type: 'STRING' as const,
+                    type: ApplicationCommandOptionType.String,
                     description: 'The URL of the song to play',
                     required: true,
                 },

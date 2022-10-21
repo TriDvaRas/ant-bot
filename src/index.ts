@@ -5,7 +5,7 @@ import { play } from './util/play';
 import { initCommands } from './util/init';
 import { nowPlaying } from './util/np';
 import { skip } from './util/skip';
-const client = new Discord.Client({ intents: ['GUILD_VOICE_STATES', 'GUILD_MESSAGES', 'GUILDS'] });
+const client = new Discord.Client({ intents: [Discord.IntentsBitField.Flags.Guilds, Discord.IntentsBitField.Flags.GuildVoiceStates, Discord.IntentsBitField.Flags.GuildMessages] });
 const player = new Player(client);
 
 
@@ -31,7 +31,7 @@ client.once("ready", () => {
 });
 
 client.on("interactionCreate", async (interaction): Promise<any> => {
-    if (!interaction.isCommand()) return;
+    if (!interaction.isChatInputCommand()) return;
     // if (interaction.guild?.me) return
 
     switch (interaction.commandName) {
@@ -50,7 +50,7 @@ client.on("interactionCreate", async (interaction): Promise<any> => {
         case `skip`:
             await skip(interaction, player)
             break;
-    
+
         default:
             break;
     }

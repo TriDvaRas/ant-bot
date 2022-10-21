@@ -1,11 +1,12 @@
-import { CommandInteraction, GuildMember } from "discord.js";
+import { ChatInputCommandInteraction, CommandInteraction, GuildMember } from "discord.js";
 import { Player, QueryType } from 'discord-player';
+import Discord from 'discord.js';
 
-export async function play(interaction: CommandInteraction, player: Player, engine: QueryType) {
+export async function play(interaction: ChatInputCommandInteraction<Discord.CacheType>, player: Player, engine: QueryType) {
     if (!interaction.member || !(interaction.member instanceof GuildMember)) return
-    if (!interaction.guild?.me) return
+    if (!interaction.guild?.members.me) return
     if (!interaction.member.voice.channel) return await interaction.reply({ content: "You are not in a voice channel!", ephemeral: true });
-    if (interaction.guild.me.voice.channelId && interaction.member.voice.channelId !== interaction.guild.me.voice.channelId) return await interaction.reply({ content: "You are not in my voice channel!", ephemeral: true });
+    if (interaction.guild.members.me.voice.channelId && interaction.member.voice.channelId !== interaction.guild.members.me.voice.channelId) return await interaction.reply({ content: "You are not in my voice channel!", ephemeral: true });
     const query = interaction.options.getString("song");
     const shuffle = interaction.options.getBoolean("shuffle")
     const queue = player.createQueue(interaction.guild, {
@@ -33,7 +34,7 @@ export async function play(interaction: CommandInteraction, player: Player, engi
         case 2:
             queue.addTracks(tracks)
             await interaction.editReply({ content: `⏱️ | Queued **${tracks.length}** tracks!` });
-            if (shuffle) 
+            if (shuffle)
                 queue.shuffle()
             if (!queue.playing)
                 queue.play()
